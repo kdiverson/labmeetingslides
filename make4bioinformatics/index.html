@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reproducible research without the reading</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Reproducible research without the reading">
+  <meta name="author" content="Kathryn Iverson">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Reproducible research without the reading</h1>
+    <h2>Using make for bioinformatics</h2>
+    <p>Kathryn Iverson<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>tl;dnr research</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Just the facts, ma&#39;am</p>
+
+<ol>
+<li>Run code exactly as the author <del>intended</del> wrote it</li>
+<li>Build and execute complicated commands on multiple files or with multiple parameters</li>
+<li>Don&#39;t re-run code unnecessarily</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>GNU make</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>Make is a tool that automatically builds stuff (usually software) based on directions given in a makefile</p></li>
+<li><p>Make runs command line instructions quickly and efficiently</p></li>
+</ul>
+
+<h2>What is a makefile?</h2>
+
+<p>Simply, a makefile is a file that contains a set of instructions (rules) to build a file (the target)</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>A simple example</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>hello_make:</p>
+
+<pre><code class="shell">say_hi:
+  echo &quot;hello world&quot;
+</code></pre>
+
+<p>say_hi is the target and <code>echo &quot;hello world&quot;</code> is the rule</p>
+
+<pre><code>pintsize: kiverson$ make -f hello_make say_hi 
+echo &quot;hello world&quot;
+hello world
+</code></pre>
+
+<p>By default make looks for a file called Makefile but it can be named anything (hello_make) and is given with the -f option. </p>
+
+<p>We tell make to make the target &#39;say_hi&#39; and it does so by executing the rules and printing them to the screen. An @ before the command disables printing.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>A longer example</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Targets</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Targets can be files and the rule(s) will only execute if the file doesn&#39;t exits</p>
+
+<h2>Rules</h2>
+
+<p>Rules can be multiple lines</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='tl;dnr research'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='GNU make'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='A simple example'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='A longer example'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Targets'>
+         5
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
