@@ -83,13 +83,13 @@
   <article data-timings="">
     <p>hello_make:</p>
 
-<pre><code class="shell">say_hi:
+<pre><code>say_hi:
   echo &quot;hello world&quot;
 </code></pre>
 
 <p>say_hi is the target and <code>echo &quot;hello world&quot;</code> is the rule</p>
 
-<pre><code>pintsize: kiverson$ make -f hello_make say_hi 
+<pre><code>pintsize:make4bioinformatics kiverson$ make -f hello_make say_hi 
 echo &quot;hello world&quot;
 hello world
 </code></pre>
@@ -104,25 +104,118 @@ hello world
 
 <slide class="" id="slide-4" style="background:;">
   <hgroup>
-    <h2>A longer example</h2>
+    <h2>Another example</h2>
   </hgroup>
   <article data-timings="">
-    
+    <pre><code>hello.txt:
+  @echo &quot;hello world&quot; &gt; $@
+  @echo &quot;today is `date`&quot; &gt;&gt; $@
+</code></pre>
+
+<pre><code>pintsize:make4bioinformatics kiverson$ make -f hello_make hello.txt
+pintsize:make4bioinformatics kiverson$ cat hello.txt 
+hello world
+today is Tue Nov 25 11:50:45 CST 2014
+pintsize:make4bioinformatics kiverson$ make -f hello_make hello.txt
+make: `hello.txt&#39; is up to date.
+pintsize:make4bioinformatics kiverson$
+</code></pre>
+
+<h3>Targets and Rules</h3>
+
+<p>Targets can be files and the rule(s) will only execute if the file doesn&#39;t exits. Rules can be on multiple lines.</p>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
 
 <slide class="" id="slide-5" style="background:;">
   <hgroup>
-    <h2>Targets</h2>
+    <h2>Special characters</h2>
   </hgroup>
   <article data-timings="">
-    <p>Targets can be files and the rule(s) will only execute if the file doesn&#39;t exits</p>
+    <p>@ -&gt; don&#39;t print command to screen <code>@echo</code></p>
 
-<h2>Rules</h2>
+<p>$@ -&gt; placeholder for target file  <code>@echo &quot;hello world&quot; &gt; $@</code></p>
 
-<p>Rules can be multiple lines</p>
+<pre><code>FILES = hello1.txt hello2.txt hello3.txt
 
+all: $(FILES)
+
+%.txt:
+  touch $*.txt
+
+clean:
+    rm $(FILES)
+</code></pre>
+
+<p>% -&gt; wildcard <code>%.txt</code></p>
+
+<p>$* -&gt; retrieves value from wildcard <code>touch $*.txt</code></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Prereqs and conditionals</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>target: (conditionals)
+  commands
+</code></pre>
+
+<pre><code>results.txt: contigs1.fa contigs2.fa
+  cat contigs1.fa contigs2.fa | ./contigstats &gt; results.txt
+</code></pre>
+
+<p>Make will create results.txt if contigs1.fa and contigs2.fa exist and will create them first if they don&#39;t.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <article data-timings="">
+    <p>make_assembly:</p>
+
+<pre><code>contigs1.fa: reads1.fa
+  velveth assembly1 reads1.fa
+  velvetg assembly1
+  mv assembly1/contigs.fa contigs1.fa
+
+contigs2.fa: reads2.fa
+  velveth assembly2 reads2.fa
+  velvetg assembly2
+  mv assembly2/contigs.fa contigs2.fa
+
+results.txt: contigs1.fa contigs2.fa
+  cat contigs1.fa contigs2.fa | ./contigstats &gt; results.txt
+
+N50: contigs1.fa contigs2.fa
+  ./calcN50 contigs1.fa
+  ./calcN50 contigs2.fa
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Macros</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><code>MACRO = definition</code></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <article data-timings="">
+    
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -151,14 +244,38 @@ hello world
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=4 title='A longer example'>
+        data-slide=4 title='Another example'>
          4
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=5 title='Targets'>
+        data-slide=5 title='Special characters'>
          5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Prereqs and conditionals'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title=''>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Macros'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title=''>
+         9
       </a>
     </li>
   </ul>

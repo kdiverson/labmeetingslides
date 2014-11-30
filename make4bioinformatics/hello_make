@@ -1,2 +1,44 @@
 say_hi:
 	@echo "hello world"
+
+hello.txt:
+	@echo "hello world" > $@
+	@echo "today is `date`" >> $@
+
+greeting.txt
+	@echo "hello world" > $@
+
+date.txt:
+	@echo "today is `date`" > $@
+
+FILES = hello1.txt hello2.txt hello3.txt
+
+all: $(FILES)
+
+%.txt:
+	touch $*.txt
+
+clean:
+	rm $(FILES)
+
+
+CONTIGS = contigs1.fa contigs2.fa
+
+contigs1.fa: reads1.fa
+	velveth assembly1 reads1.fa
+	velvetg assembly1
+	mv assembly1/contigs.fa contigs1.fa
+
+contigs2.fa: reads2.fa
+	velveth assembly2 reads2.fa
+	velvetg assembly2
+	mv assembly2/contigs.fa contigs2.fa
+
+results.txt: contigs1.fa contigs2.fa
+	cat contigs1.fa contigs2.fa | ./contigstats > results.txt
+
+N50: $(CONTIGS)
+	./calcN50 contigs1.fa
+	./calcN50 contigs2.fa
+
+GANG AFT AGLEY
