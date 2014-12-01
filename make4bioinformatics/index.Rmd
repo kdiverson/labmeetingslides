@@ -30,7 +30,9 @@ Just the facts, ma'am
 
 ## What is a makefile?
 
-Simply, a makefile is a file that contains a set of instructions (rules) to build a file (the target)
+* Simply, a makefile is a file that contains a set of instructions (rules) to build a file (the target)
+
+* Actually, it's a ~40 year old functional programming language, sort of
 
 ---
 
@@ -98,6 +100,32 @@ clean:
 
 $* -> retrieves value from wildcard `touch $*.txt`
 
+'-' beforea command ignores errors `-echo`
+
+---
+
+## Parallelization
+
+Make can seperate processes onto different processors with the -j option
+
+```
+make -j 3
+```
+
+This makes all the .txt files at once in parallel
+
+```
+FILES = hello1.txt hello2.txt hello3.txt
+
+all: $(FILES)
+
+%.txt:
+  touch $*.txt
+
+clean:
+  rm $(FILES)
+```
+
 ---
 
 ## Prereqs and conditionals
@@ -151,7 +179,7 @@ N50: contigs1.fa contigs2.fa
 
 ## Variables
 
-* declared with '=' and called with '$()'
+* Declared with '=' and called with '$()'
 
 make_contigs
 ```
@@ -187,9 +215,9 @@ $(RESULTS): $(SEQS)
 
 ## Macros
 
-* basically the same as a variable but you'll sound cool: `MACRO = definition`
-* can be stored in a separate file and imported to your main makefile
-* one set of setting for running on a server and on set for a laptop
+* Basically the same as a variable but you'll sound cool: `MACRO = definition`
+* Can be stored in a separate file and imported to your main makefile
+* One set of setting for running on a server and on set for a laptop
 
 ---
 
@@ -216,4 +244,5 @@ command line:
 ```
 $ make -NPROC=80 -f project-makefile
 ```
+
 

@@ -70,7 +70,10 @@
 
 <h2>What is a makefile?</h2>
 
-<p>Simply, a makefile is a file that contains a set of instructions (rules) to build a file (the target)</p>
+<ul>
+<li><p>Simply, a makefile is a file that contains a set of instructions (rules) to build a file (the target)</p></li>
+<li><p>Actually, it&#39;s a ~40 year old functional programming language, sort of</p></li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -153,11 +156,40 @@ clean:
 
 <p>$* -&gt; retrieves value from wildcard <code>touch $*.txt</code></p>
 
+<p>&#39;-&#39; beforea command ignores errors <code>-echo</code></p>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
 
 <slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Parallelization</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Make can seperate processes onto different processors with the -j option</p>
+
+<pre><code>make -j 3
+</code></pre>
+
+<p>This makes all the .txt files at once in parallel</p>
+
+<pre><code>FILES = hello1.txt hello2.txt hello3.txt
+
+all: $(FILES)
+
+%.txt:
+  touch $*.txt
+
+clean:
+  rm $(FILES)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
   <hgroup>
     <h2>Prereqs and conditionals</h2>
   </hgroup>
@@ -185,7 +217,7 @@ results.txt: contigs1.fa contigs2.fa
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-7" style="background:;">
+<slide class="" id="slide-8" style="background:;">
   <article data-timings="">
     <p>make_assembly:</p>
 
@@ -211,13 +243,13 @@ N50: contigs1.fa contigs2.fa
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-8" style="background:;">
+<slide class="" id="slide-9" style="background:;">
   <hgroup>
     <h2>Variables</h2>
   </hgroup>
   <article data-timings="">
     <ul>
-<li>declaired with &#39;=&#39; and called with &#39;$()&#39;</li>
+<li>Declared with &#39;=&#39; and called with &#39;$()&#39;</li>
 </ul>
 
 <p>make_contigs</p>
@@ -233,7 +265,7 @@ the contig files are contigs1.fa contigs2.fa
 </code></pre>
 
 <ul>
-<li>&#39;$&lt;&#39; first prerequsite</li>
+<li>&#39;$&lt;&#39; first prerequisite</li>
 <li>&#39;$?&#39; all the out of date prereqs</li>
 <li>&#39;$^&#39; all prereqs</li>
 </ul>
@@ -242,7 +274,7 @@ the contig files are contigs1.fa contigs2.fa
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-9" style="background:;">
+<slide class="" id="slide-10" style="background:;">
   <hgroup>
     <h2>Functions</h2>
   </hgroup>
@@ -260,22 +292,22 @@ $(RESULTS): $(SEQS)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-10" style="background:;">
+<slide class="" id="slide-11" style="background:;">
   <hgroup>
     <h2>Macros</h2>
   </hgroup>
   <article data-timings="">
     <ul>
-<li>basically the same as a variable but you&#39;ll sound cool: <code>MACRO = definition</code></li>
-<li>can be stored in a seperate file and imported to your main makefile</li>
-<li>one set of setting for running on a server and on set for a laptop</li>
+<li>Basically the same as a variable but you&#39;ll sound cool: <code>MACRO = definition</code></li>
+<li>Can be stored in a separate file and imported to your main makefile</li>
+<li>One set of setting for running on a server and on set for a laptop</li>
 </ul>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-11" style="background:;">
+<slide class="" id="slide-12" style="background:;">
   <article data-timings="">
     <p>config-axiom:</p>
 
@@ -342,38 +374,44 @@ $RESULTS:
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=6 title='Prereqs and conditionals'>
+        data-slide=6 title='Parallelization'>
          6
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=7 title=''>
+        data-slide=7 title='Prereqs and conditionals'>
          7
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=8 title='Variables'>
+        data-slide=8 title=''>
          8
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=9 title='Functions'>
+        data-slide=9 title='Variables'>
          9
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=10 title='Macros'>
+        data-slide=10 title='Functions'>
          10
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=11 title=''>
+        data-slide=11 title='Macros'>
          11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title=''>
+         12
       </a>
     </li>
   </ul>
