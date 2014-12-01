@@ -151,7 +151,7 @@ N50: contigs1.fa contigs2.fa
 
 ## Variables
 
-* declaired with '=' and called with '$()'
+* declared with '=' and called with '$()'
 
 make_contigs
 ```
@@ -166,7 +166,7 @@ pintsize:make4bioinformatics kiverson$ make -f make_contigs print_contigs
 the contig files are contigs1.fa contigs2.fa
 ```
 
-* '$<' first prerequsite
+* '$<' first prerequisite
 * '$?' all the out of date prereqs
 * '$\^' all prereqs
 
@@ -188,7 +188,7 @@ $(RESULTS): $(SEQS)
 ## Macros
 
 * basically the same as a variable but you'll sound cool: `MACRO = definition`
-* can be stored in a seperate file and imported to your main makefile
+* can be stored in a separate file and imported to your main makefile
 * one set of setting for running on a server and on set for a laptop
 
 ---
