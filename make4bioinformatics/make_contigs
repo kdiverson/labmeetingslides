@@ -1,17 +1,6 @@
-say_hi:
-	@echo "hello world"
-
-hello.txt:
-	@echo "hello world" > $@
-	@echo "today is `date`" >> $@
-
-greeting.txt
-	@echo "hello world" > $@
-
-date.txt:
-	@echo "today is `date`" > $@
-
 CONTIGS = contigs1.fa contigs2.fa
+
+TRIMMED = $(addsuffix .trimmed, $(CONTIGS) )
 
 contigs1.fa: reads1.fa
 	velveth assembly1 reads1.fa
@@ -32,3 +21,6 @@ N50: $(CONTIGS)
 
 print_contigs:
 	@echo "the contig files are $(CONTIGS)"
+
+show_trimmed:
+	@echo "the trimmed files are $(TRIMMED)"

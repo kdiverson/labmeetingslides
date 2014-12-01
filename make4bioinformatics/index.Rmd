@@ -112,7 +112,17 @@ results.txt: contigs1.fa contigs2.fa
   cat contigs1.fa contigs2.fa | ./contigstats > results.txt
 ```
 
-Make will create results.txt if contigs1.fa and contigs2.fa exist and will create them first if they don't.
+Make will create results.txt if contigs1.fa and contigs2.fa exist and will create them first if they don't. Will also update any target file if it's older than the conditionals.
+
+```
+contigs1.fa:
+  python get_contigs.py > contigs1.fa
+  
+results.txt: contigs1.fa contigs2.fa
+  cat contigs1.fa contigs2.fa | ./contigstats > results.txt
+```
+
+results.txt will be recalculated when contigs1.fa is run.
 
 ---
 
@@ -139,10 +149,71 @@ N50: contigs1.fa contigs2.fa
 
 ---
 
-## Macros
+## Variables
 
-`MACRO = definition`
+* declaired with '=' and called with '$()'
 
+make_contigs
+```
+CONTIGS = contigs1.fa contigs2.fa
 
+print_contigs:
+  @echo "the contig files are $(CONTIGS)"
+```
+
+```
+pintsize:make4bioinformatics kiverson$ make -f make_contigs print_contigs
+the contig files are contigs1.fa contigs2.fa
+```
+
+* '$<' first prerequsite
+* '$?' all the out of date prereqs
+* '$\^' all prereqs
 
 ---
+
+## Functions
+Add suffix to a list: `$(addsuffix <suffix>, list)`
+
+````
+SEQS = seq1.fa seq2.fa seq3.fa
+TRIMMED = $(addsuffix .trimmed, $(seqs) )
+RESULTS =  $(addprefix /data/results/, $(TRIMMED) )
+$(RESULTS): $(SEQS)
+  qualtrim $^
+```
+
+---
+
+## Macros
+
+* basically the same as a variable but you'll sound cool: `MACRO = definition`
+* can be stored in a seperate file and imported to your main makefile
+* one set of setting for running on a server and on set for a laptop
+
+---
+
+config-axiom:
+```
+RESULTS_DIR = /home/kiverson/project/data/results/
+NPROC = 16
+```
+config-workstation:
+```
+RESULTS_DIR = /project/
+NPROC = 4
+```
+
+project-makefile:
+```
+include config-axiom
+RESULTS =  $(addprefix $(RESULTS_DIR), results.txt )
+$RESULTS:
+  calc $NPROC data.txt > $@
+```
+
+command line:
+```
+$ make -NPROC=80 -f project-makefile
+```
+

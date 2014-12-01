@@ -170,7 +170,16 @@ clean:
   cat contigs1.fa contigs2.fa | ./contigstats &gt; results.txt
 </code></pre>
 
-<p>Make will create results.txt if contigs1.fa and contigs2.fa exist and will create them first if they don&#39;t.</p>
+<p>Make will create results.txt if contigs1.fa and contigs2.fa exist and will create them first if they don&#39;t. Will also update any target file if it&#39;s older than the conditionals.</p>
+
+<pre><code>contigs1.fa:
+  python get_contigs.py &gt; contigs1.fa
+
+results.txt: contigs1.fa contigs2.fa
+  cat contigs1.fa contigs2.fa | ./contigstats &gt; results.txt
+</code></pre>
+
+<p>results.txt will be recalculated when contigs1.fa is run.</p>
 
   </article>
   <!-- Presenter Notes -->
@@ -204,18 +213,95 @@ N50: contigs1.fa contigs2.fa
 
 <slide class="" id="slide-8" style="background:;">
   <hgroup>
-    <h2>Macros</h2>
+    <h2>Variables</h2>
   </hgroup>
   <article data-timings="">
-    <p><code>MACRO = definition</code></p>
+    <ul>
+<li>declaired with &#39;=&#39; and called with &#39;$()&#39;</li>
+</ul>
+
+<p>make_contigs</p>
+
+<pre><code>CONTIGS = contigs1.fa contigs2.fa
+
+print_contigs:
+  @echo &quot;the contig files are $(CONTIGS)&quot;
+</code></pre>
+
+<pre><code>pintsize:make4bioinformatics kiverson$ make -f make_contigs print_contigs
+the contig files are contigs1.fa contigs2.fa
+</code></pre>
+
+<ul>
+<li>&#39;$&lt;&#39; first prerequsite</li>
+<li>&#39;$?&#39; all the out of date prereqs</li>
+<li>&#39;$^&#39; all prereqs</li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
 <slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Functions</h2>
+  </hgroup>
   <article data-timings="">
-    
+    <p>Add suffix to a list: <code>$(addsuffix &lt;suffix&gt;, list)</code></p>
+
+<pre><code>SEQS = seq1.fa seq2.fa seq3.fa
+TRIMMED = $(addsuffix .trimmed, $(seqs) )
+RESULTS =  $(addprefix /data/results/, $(TRIMMED) )
+$(RESULTS): $(SEQS)
+  qualtrim $^
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Macros</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>basically the same as a variable but you&#39;ll sound cool: <code>MACRO = definition</code></li>
+<li>can be stored in a seperate file and imported to your main makefile</li>
+<li>one set of setting for running on a server and on set for a laptop</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <article data-timings="">
+    <p>config-axiom:</p>
+
+<pre><code>RESULTS_DIR = /home/kiverson/project/data/results/
+NPROC = 16
+</code></pre>
+
+<p>config-workstation:</p>
+
+<pre><code>RESULTS_DIR = /project/
+NPROC = 4
+</code></pre>
+
+<p>project-makefile:</p>
+
+<pre><code>include config-axiom
+RESULTS =  $(addprefix $(RESULTS_DIR), results.txt )
+$RESULTS:
+  calc $NPROC data.txt &gt; $@
+</code></pre>
+
+<p>command line:</p>
+
+<pre><code>$ make -NPROC=80 -f project-makefile
+</code></pre>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -268,14 +354,26 @@ N50: contigs1.fa contigs2.fa
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=8 title='Macros'>
+        data-slide=8 title='Variables'>
          8
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=9 title=''>
+        data-slide=9 title='Functions'>
          9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Macros'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title=''>
+         11
       </a>
     </li>
   </ul>
