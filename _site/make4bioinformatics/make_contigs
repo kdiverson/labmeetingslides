@@ -1,0 +1,26 @@
+CONTIGS = contigs1.fa contigs2.fa
+
+TRIMMED = $(addsuffix .trimmed, $(CONTIGS) )
+
+contigs1.fa: reads1.fa
+	velveth assembly1 reads1.fa
+	velvetg assembly1
+	mv assembly1/contigs.fa contigs1.fa
+
+contigs2.fa: reads2.fa
+	velveth assembly2 reads2.fa
+	velvetg assembly2
+	mv assembly2/contigs.fa contigs2.fa
+
+results.txt: contigs1.fa contigs2.fa
+	cat contigs1.fa contigs2.fa | ./contigstats > results.txt
+
+N50: $(CONTIGS)
+	./calcN50 contigs1.fa
+	./calcN50 contigs2.fa
+
+print_contigs:
+	@echo "the contig files are $(CONTIGS)"
+
+show_trimmed:
+	@echo "the trimmed files are $(TRIMMED)"

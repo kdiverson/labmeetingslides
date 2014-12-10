@@ -1,0 +1,250 @@
+<h2 id="tldnr-research">tl;dnr research</h2>
+
+<p>Just the facts, ma’am</p>
+
+<ol>
+  <li>Run code exactly as the author ~~intended~~ wrote it</li>
+  <li>Build and execute complicated commands on multiple files or with multiple parameters</li>
+  <li>Don’t re-run code unnecessarily</li>
+</ol>
+
+<p>— .class #id </p>
+
+<h2 id="gnu-make">GNU make</h2>
+
+<ul>
+  <li>
+    <p>Make is a tool that automatically builds stuff (usually software) based on directions given in a makefile</p>
+  </li>
+  <li>
+    <p>Make runs command line instructions quickly and efficiently</p>
+  </li>
+</ul>
+
+<h2 id="what-is-a-makefile">What is a makefile?</h2>
+
+<ul>
+  <li>
+    <p>Simply, a makefile is a file that contains a set of instructions (rules) to build a file (the target)</p>
+  </li>
+  <li>
+    <p>Actually, it’s a ~40 year old functional programming language, sort of</p>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="a-simple-example">A simple example</h2>
+
+<p>hello_make:
+<code>
+say_hi:
+  echo "hello world"
+</code></p>
+
+<p>say_hi is the target and <code>echo "hello world"</code> is the rule
+<code>
+pintsize:make4bioinformatics kiverson$ make -f hello_make say_hi 
+echo "hello world"
+hello world
+</code></p>
+
+<p>By default make looks for a file called Makefile but it can be named anything (hello_make) and is given with the -f option. </p>
+
+<p>We tell make to make the target ‘say_hi’ and it does so by executing the rules and printing them to the screen. An @ before the command disables printing.</p>
+
+<hr />
+
+<h2 id="another-example">Another example</h2>
+<p><code>
+hello.txt:
+  @echo "hello world" &gt; $@
+  @echo "today is `date`" &gt;&gt; $@
+</code></p>
+
+<p><code>
+pintsize:make4bioinformatics kiverson$ make -f hello_make hello.txt
+pintsize:make4bioinformatics kiverson$ cat hello.txt 
+hello world
+today is Tue Nov 25 11:50:45 CST 2014
+pintsize:make4bioinformatics kiverson$ make -f hello_make hello.txt
+make: `hello.txt' is up to date.
+pintsize:make4bioinformatics kiverson$
+</code></p>
+
+<h3 id="targets-and-rules">Targets and Rules</h3>
+<p>Targets can be files and the rule(s) will only execute if the file doesn’t exits. Rules can be on multiple lines.</p>
+
+<hr />
+
+<h2 id="special-characters">Special characters</h2>
+
+<p>@ -&gt; don’t print command to screen <code>@echo</code></p>
+
+<p>$@ -&gt; placeholder for target file  <code>@echo "hello world" &gt; $@</code>
+```
+FILES = hello1.txt hello2.txt hello3.txt</p>
+
+<p>all: $(FILES)</p>
+
+<p>%.txt:
+  touch $*.txt</p>
+
+<p>clean:
+	rm $(FILES)
+```
+% -&gt; wildcard <code>%.txt</code></p>
+
+<p>$* -&gt; retrieves value from wildcard <code>touch $*.txt</code></p>
+
+<p>’-‘ beforea command ignores errors <code>-echo</code></p>
+
+<hr />
+
+<h2 id="parallelization">Parallelization</h2>
+
+<p>Make can seperate processes onto different processors with the -j option</p>
+
+<p><code>
+make -j 3
+</code></p>
+
+<p>This makes all the .txt files at once in parallel</p>
+
+<p>```
+FILES = hello1.txt hello2.txt hello3.txt</p>
+
+<p>all: $(FILES)</p>
+
+<p>%.txt:
+  touch $*.txt</p>
+
+<p>clean:
+  rm $(FILES)
+```</p>
+
+<hr />
+
+<h2 id="prereqs-and-conditionals">Prereqs and conditionals</h2>
+
+<p><code>
+target: (conditionals)
+  commands
+</code></p>
+
+<p><code>
+results.txt: contigs1.fa contigs2.fa
+  cat contigs1.fa contigs2.fa | ./contigstats &gt; results.txt
+</code></p>
+
+<p>Make will create results.txt if contigs1.fa and contigs2.fa exist and will create them first if they don’t. Will also update any target file if it’s older than the conditionals.</p>
+
+<p>```
+contigs1.fa:
+  python get_contigs.py &gt; contigs1.fa</p>
+
+<p>results.txt: contigs1.fa contigs2.fa
+  cat contigs1.fa contigs2.fa | ./contigstats &gt; results.txt
+```</p>
+
+<p>results.txt will be recalculated when contigs1.fa is run.</p>
+
+<hr />
+
+<p>make_assembly:</p>
+
+<p>```
+contigs1.fa: reads1.fa
+  velveth assembly1 reads1.fa
+  velvetg assembly1
+  mv assembly1/contigs.fa contigs1.fa</p>
+
+<p>contigs2.fa: reads2.fa
+  velveth assembly2 reads2.fa
+  velvetg assembly2
+  mv assembly2/contigs.fa contigs2.fa</p>
+
+<p>results.txt: contigs1.fa contigs2.fa
+  cat contigs1.fa contigs2.fa | ./contigstats &gt; results.txt</p>
+
+<p>N50: contigs1.fa contigs2.fa
+  ./calcN50 contigs1.fa
+  ./calcN50 contigs2.fa
+```</p>
+
+<hr />
+
+<h2 id="variables">Variables</h2>
+
+<ul>
+  <li>Declared with ‘=’ and called with ‘$()’</li>
+</ul>
+
+<p>make_contigs
+```
+CONTIGS = contigs1.fa contigs2.fa</p>
+
+<p>print_contigs:
+  @echo “the contig files are $(CONTIGS)”
+```</p>
+
+<p><code>
+pintsize:make4bioinformatics kiverson$ make -f make_contigs print_contigs
+the contig files are contigs1.fa contigs2.fa
+</code></p>
+
+<ul>
+  <li>’$&lt;’ first prerequisite</li>
+  <li>’$?’ all the out of date prereqs</li>
+  <li>’$\^’ all prereqs</li>
+</ul>
+
+<hr />
+
+<h2 id="functions">Functions</h2>
+<p>Add suffix to a list: <code>$(addsuffix &lt;suffix&gt;, list)</code></p>
+
+<p>````
+SEQS = seq1.fa seq2.fa seq3.fa
+TRIMMED = $(addsuffix .trimmed, $(seqs) )
+RESULTS =  $(addprefix /data/results/, $(TRIMMED) )
+$(RESULTS): $(SEQS)
+  qualtrim $^
+```</p>
+
+<hr />
+
+<h2 id="macros">Macros</h2>
+
+<ul>
+  <li>Basically the same as a variable but you’ll sound cool: <code>MACRO = definition</code></li>
+  <li>Can be stored in a separate file and imported to your main makefile</li>
+  <li>One set of setting for running on a server and on set for a laptop</li>
+</ul>
+
+<hr />
+
+<p>config-axiom:
+<code>
+RESULTS_DIR = /home/kiverson/project/data/results/
+NPROC = 16
+</code>
+config-workstation:
+<code>
+RESULTS_DIR = /project/
+NPROC = 4
+</code></p>
+
+<p>project-makefile:
+<code>
+include config-axiom
+RESULTS =  $(addprefix $(RESULTS_DIR), results.txt )
+$RESULTS:
+  calc $NPROC data.txt &gt; $@
+</code></p>
+
+<p>command line:
+<code>
+$ make -NPROC=80 -f project-makefile
+</code></p>
+
