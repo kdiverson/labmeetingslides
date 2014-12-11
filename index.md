@@ -1,9 +1,8 @@
 ---
-layout: page
+layout: default
 title: Lab meeting slides
 tagline: Slides from lab meetings
 ---
-{% include JB/setup %}
 
 ##Slides
 
