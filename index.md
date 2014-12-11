@@ -6,4 +6,4 @@ tagline: Slides from lab meetings
 
 ##Slides
 
-[make](make4bioinformatics/)
+[make](make4bioinformatics/index.html)

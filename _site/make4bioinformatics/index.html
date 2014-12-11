@@ -1,250 +1,432 @@
-<h2 id="tldnr-research">tl;dnr research</h2>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reproducible research without the reading</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Reproducible research without the reading">
+  <meta name="author" content="Kathryn Iverson">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
 
-<p>Just the facts, ma’am</p>
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/slides" 
+    src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Reproducible research without the reading</h1>
+    <h2>Using make for bioinformatics</h2>
+    <p>Kathryn Iverson<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>tl;dnr research</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Just the facts, ma&#39;am</p>
 
 <ol>
-  <li>Run code exactly as the author ~~intended~~ wrote it</li>
-  <li>Build and execute complicated commands on multiple files or with multiple parameters</li>
-  <li>Don’t re-run code unnecessarily</li>
+<li>Run code exactly as the author <del>intended</del> wrote it</li>
+<li>Build and execute complicated commands on multiple files or with multiple parameters</li>
+<li>Don&#39;t re-run code unnecessarily</li>
 </ol>
 
-<p>— .class #id </p>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
 
-<h2 id="gnu-make">GNU make</h2>
-
-<ul>
-  <li>
-    <p>Make is a tool that automatically builds stuff (usually software) based on directions given in a makefile</p>
-  </li>
-  <li>
-    <p>Make runs command line instructions quickly and efficiently</p>
-  </li>
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>GNU make</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>Make is a tool that automatically builds stuff (usually software) based on directions given in a makefile</p></li>
+<li><p>Make runs command line instructions quickly and efficiently</p></li>
 </ul>
 
-<h2 id="what-is-a-makefile">What is a makefile?</h2>
+<h2>What is a makefile?</h2>
 
 <ul>
-  <li>
-    <p>Simply, a makefile is a file that contains a set of instructions (rules) to build a file (the target)</p>
-  </li>
-  <li>
-    <p>Actually, it’s a ~40 year old functional programming language, sort of</p>
-  </li>
+<li><p>Simply, a makefile is a file that contains a set of instructions (rules) to build a file (the target)</p></li>
+<li><p>Actually, it&#39;s a ~40 year old functional programming language, sort of</p></li>
 </ul>
 
-<hr />
+  </article>
+  <!-- Presenter Notes -->
+</slide>
 
-<h2 id="a-simple-example">A simple example</h2>
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>A simple example</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>hello_make:</p>
 
-<p>hello_make:
-<code>
-say_hi:
-  echo "hello world"
-</code></p>
+<pre><code>say_hi:
+  echo &quot;hello world&quot;
+</code></pre>
 
-<p>say_hi is the target and <code>echo "hello world"</code> is the rule
-<code>
-pintsize:make4bioinformatics kiverson$ make -f hello_make say_hi 
-echo "hello world"
+<p>say_hi is the target and <code>echo &quot;hello world&quot;</code> is the rule</p>
+
+<pre><code>pintsize:make4bioinformatics kiverson$ make -f hello_make say_hi 
+echo &quot;hello world&quot;
 hello world
-</code></p>
+</code></pre>
 
 <p>By default make looks for a file called Makefile but it can be named anything (hello_make) and is given with the -f option. </p>
 
-<p>We tell make to make the target ‘say_hi’ and it does so by executing the rules and printing them to the screen. An @ before the command disables printing.</p>
+<p>We tell make to make the target &#39;say_hi&#39; and it does so by executing the rules and printing them to the screen. An @ before the command disables printing.</p>
 
-<hr />
+  </article>
+  <!-- Presenter Notes -->
+</slide>
 
-<h2 id="another-example">Another example</h2>
-<p><code>
-hello.txt:
-  @echo "hello world" &gt; $@
-  @echo "today is `date`" &gt;&gt; $@
-</code></p>
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Another example</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>hello.txt:
+  @echo &quot;hello world&quot; &gt; $@
+  @echo &quot;today is `date`&quot; &gt;&gt; $@
+</code></pre>
 
-<p><code>
-pintsize:make4bioinformatics kiverson$ make -f hello_make hello.txt
+<pre><code>pintsize:make4bioinformatics kiverson$ make -f hello_make hello.txt
 pintsize:make4bioinformatics kiverson$ cat hello.txt 
 hello world
 today is Tue Nov 25 11:50:45 CST 2014
 pintsize:make4bioinformatics kiverson$ make -f hello_make hello.txt
-make: `hello.txt' is up to date.
+make: `hello.txt&#39; is up to date.
 pintsize:make4bioinformatics kiverson$
-</code></p>
+</code></pre>
 
-<h3 id="targets-and-rules">Targets and Rules</h3>
-<p>Targets can be files and the rule(s) will only execute if the file doesn’t exits. Rules can be on multiple lines.</p>
+<h3>Targets and Rules</h3>
 
-<hr />
+<p>Targets can be files and the rule(s) will only execute if the file doesn&#39;t exits. Rules can be on multiple lines.</p>
 
-<h2 id="special-characters">Special characters</h2>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
 
-<p>@ -&gt; don’t print command to screen <code>@echo</code></p>
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Special characters</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>@ -&gt; don&#39;t print command to screen <code>@echo</code></p>
 
-<p>$@ -&gt; placeholder for target file  <code>@echo "hello world" &gt; $@</code>
-```
-FILES = hello1.txt hello2.txt hello3.txt</p>
+<p>$@ -&gt; placeholder for target file  <code>@echo &quot;hello world&quot; &gt; $@</code></p>
 
-<p>all: $(FILES)</p>
+<pre><code>FILES = hello1.txt hello2.txt hello3.txt
 
-<p>%.txt:
-  touch $*.txt</p>
+all: $(FILES)
 
-<p>clean:
-	rm $(FILES)
-```
-% -&gt; wildcard <code>%.txt</code></p>
+%.txt:
+  touch $*.txt
+
+clean:
+    rm $(FILES)
+</code></pre>
+
+<p>% -&gt; wildcard <code>%.txt</code></p>
 
 <p>$* -&gt; retrieves value from wildcard <code>touch $*.txt</code></p>
 
-<p>’-‘ beforea command ignores errors <code>-echo</code></p>
+<p>&#39;-&#39; beforea command ignores errors <code>-echo</code></p>
 
-<hr />
+  </article>
+  <!-- Presenter Notes -->
+</slide>
 
-<h2 id="parallelization">Parallelization</h2>
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Parallelization</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Make can seperate processes onto different processors with the -j option</p>
 
-<p>Make can seperate processes onto different processors with the -j option</p>
-
-<p><code>
-make -j 3
-</code></p>
+<pre><code>make -j 3
+</code></pre>
 
 <p>This makes all the .txt files at once in parallel</p>
 
-<p>```
-FILES = hello1.txt hello2.txt hello3.txt</p>
+<pre><code>FILES = hello1.txt hello2.txt hello3.txt
 
-<p>all: $(FILES)</p>
+all: $(FILES)
 
-<p>%.txt:
-  touch $*.txt</p>
+%.txt:
+  touch $*.txt
 
-<p>clean:
+clean:
   rm $(FILES)
-```</p>
+</code></pre>
 
-<hr />
+  </article>
+  <!-- Presenter Notes -->
+</slide>
 
-<h2 id="prereqs-and-conditionals">Prereqs and conditionals</h2>
-
-<p><code>
-target: (conditionals)
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Prereqs and conditionals</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>target: (conditionals)
   commands
-</code></p>
+</code></pre>
 
-<p><code>
+<pre><code>results.txt: contigs1.fa contigs2.fa
+  cat contigs1.fa contigs2.fa | ./contigstats &gt; results.txt
+</code></pre>
+
+<p>Make will create results.txt if contigs1.fa and contigs2.fa exist and will create them first if they don&#39;t. Will also update any target file if it&#39;s older than the conditionals.</p>
+
+<pre><code>contigs1.fa:
+  python get_contigs.py &gt; contigs1.fa
+
 results.txt: contigs1.fa contigs2.fa
   cat contigs1.fa contigs2.fa | ./contigstats &gt; results.txt
-</code></p>
-
-<p>Make will create results.txt if contigs1.fa and contigs2.fa exist and will create them first if they don’t. Will also update any target file if it’s older than the conditionals.</p>
-
-<p>```
-contigs1.fa:
-  python get_contigs.py &gt; contigs1.fa</p>
-
-<p>results.txt: contigs1.fa contigs2.fa
-  cat contigs1.fa contigs2.fa | ./contigstats &gt; results.txt
-```</p>
+</code></pre>
 
 <p>results.txt will be recalculated when contigs1.fa is run.</p>
 
-<hr />
+  </article>
+  <!-- Presenter Notes -->
+</slide>
 
-<p>make_assembly:</p>
+<slide class="" id="slide-8" style="background:;">
+  <article data-timings="">
+    <p>make_assembly:</p>
 
-<p>```
-contigs1.fa: reads1.fa
+<pre><code>contigs1.fa: reads1.fa
   velveth assembly1 reads1.fa
   velvetg assembly1
-  mv assembly1/contigs.fa contigs1.fa</p>
+  mv assembly1/contigs.fa contigs1.fa
 
-<p>contigs2.fa: reads2.fa
+contigs2.fa: reads2.fa
   velveth assembly2 reads2.fa
   velvetg assembly2
-  mv assembly2/contigs.fa contigs2.fa</p>
+  mv assembly2/contigs.fa contigs2.fa
 
-<p>results.txt: contigs1.fa contigs2.fa
-  cat contigs1.fa contigs2.fa | ./contigstats &gt; results.txt</p>
+results.txt: contigs1.fa contigs2.fa
+  cat contigs1.fa contigs2.fa | ./contigstats &gt; results.txt
 
-<p>N50: contigs1.fa contigs2.fa
+N50: contigs1.fa contigs2.fa
   ./calcN50 contigs1.fa
   ./calcN50 contigs2.fa
-```</p>
+</code></pre>
 
-<hr />
+  </article>
+  <!-- Presenter Notes -->
+</slide>
 
-<h2 id="variables">Variables</h2>
-
-<ul>
-  <li>Declared with ‘=’ and called with ‘$()’</li>
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Variables</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Declared with &#39;=&#39; and called with &#39;$()&#39;</li>
 </ul>
 
-<p>make_contigs
-```
-CONTIGS = contigs1.fa contigs2.fa</p>
+<p>make_contigs</p>
 
-<p>print_contigs:
-  @echo “the contig files are $(CONTIGS)”
-```</p>
+<pre><code>CONTIGS = contigs1.fa contigs2.fa
 
-<p><code>
-pintsize:make4bioinformatics kiverson$ make -f make_contigs print_contigs
+print_contigs:
+  @echo &quot;the contig files are $(CONTIGS)&quot;
+</code></pre>
+
+<pre><code>pintsize:make4bioinformatics kiverson$ make -f make_contigs print_contigs
 the contig files are contigs1.fa contigs2.fa
-</code></p>
+</code></pre>
 
 <ul>
-  <li>’$&lt;’ first prerequisite</li>
-  <li>’$?’ all the out of date prereqs</li>
-  <li>’$\^’ all prereqs</li>
+<li>&#39;$&lt;&#39; first prerequisite</li>
+<li>&#39;$?&#39; all the out of date prereqs</li>
+<li>&#39;$^&#39; all prereqs</li>
 </ul>
 
-<hr />
+  </article>
+  <!-- Presenter Notes -->
+</slide>
 
-<h2 id="functions">Functions</h2>
-<p>Add suffix to a list: <code>$(addsuffix &lt;suffix&gt;, list)</code></p>
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Functions</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Add suffix to a list: <code>$(addsuffix &lt;suffix&gt;, list)</code></p>
 
-<p>````
-SEQS = seq1.fa seq2.fa seq3.fa
+<pre><code>SEQS = seq1.fa seq2.fa seq3.fa
 TRIMMED = $(addsuffix .trimmed, $(seqs) )
 RESULTS =  $(addprefix /data/results/, $(TRIMMED) )
 $(RESULTS): $(SEQS)
   qualtrim $^
-```</p>
+</code></pre>
 
-<hr />
+  </article>
+  <!-- Presenter Notes -->
+</slide>
 
-<h2 id="macros">Macros</h2>
-
-<ul>
-  <li>Basically the same as a variable but you’ll sound cool: <code>MACRO = definition</code></li>
-  <li>Can be stored in a separate file and imported to your main makefile</li>
-  <li>One set of setting for running on a server and on set for a laptop</li>
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Macros</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Basically the same as a variable but you&#39;ll sound cool: <code>MACRO = definition</code></li>
+<li>Can be stored in a separate file and imported to your main makefile</li>
+<li>One set of setting for running on a server and on set for a laptop</li>
 </ul>
 
-<hr />
+  </article>
+  <!-- Presenter Notes -->
+</slide>
 
-<p>config-axiom:
-<code>
-RESULTS_DIR = /home/kiverson/project/data/results/
+<slide class="" id="slide-12" style="background:;">
+  <article data-timings="">
+    <p>config-axiom:</p>
+
+<pre><code>RESULTS_DIR = /home/kiverson/project/data/results/
 NPROC = 16
-</code>
-config-workstation:
-<code>
-RESULTS_DIR = /project/
-NPROC = 4
-</code></p>
+</code></pre>
 
-<p>project-makefile:
-<code>
-include config-axiom
+<p>config-workstation:</p>
+
+<pre><code>RESULTS_DIR = /project/
+NPROC = 4
+</code></pre>
+
+<p>project-makefile:</p>
+
+<pre><code>include config-axiom
 RESULTS =  $(addprefix $(RESULTS_DIR), results.txt )
 $RESULTS:
   calc $NPROC data.txt &gt; $@
-</code></p>
+</code></pre>
 
-<p>command line:
-<code>
-$ make -NPROC=80 -f project-makefile
-</code></p>
+<p>command line:</p>
 
+<pre><code>$ make -NPROC=80 -f project-makefile
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='tl;dnr research'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='GNU make'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='A simple example'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Another example'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Special characters'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Parallelization'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Prereqs and conditionals'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title=''>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Variables'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Functions'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Macros'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title=''>
+         12
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
