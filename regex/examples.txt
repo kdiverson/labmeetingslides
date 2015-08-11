@@ -1,0 +1,74 @@
+- finding things
+- data clean up
+
+s/AUG.*UAG/g
+
+find all humans: grep "\b9609\b" > humans.txt
+
+AUG/i
+\d{3} -- 3 digit number
+\s+ -- one or more spaces
+\b -- word boundary
+\bword\b
+\w word characters
+capitol letters negate
+? match zero or once (optional match)
+Nov(ember)? matches Nov and November
+? is greedy, will match as much as possible
+	Nov 15(th)? will capture "Nov 15th" not "Nov 15"
+	add a second ? to make it lazy Nov 15(th)??
+		good for data clean-up
+() capture group add (:?) to make non-capturing
+
+\1 is a backreference, matches the same thing as the first capture group
+	/(red|green|blue) x \1/ matches red x red, green x green or blue x blue but not blue x red
+	/(Sample_.*) something \1 matches the sample name
+	find double words \b(\w+)\s+\1\b matches "the the" but not "the then" because of the trailing \b
+
+---
+
+## lookarounds
+don't actually match, just tell if a match is possible
+
+### lookahead
+q(?!u) q not followed by u
+q(?=u) q must be followed by a u
+the regex will only match the q in either case
+lookahead can use any regular expression and can use capture groups as normal
+
+---
+
+### lookbehind
+
+negative lookbehind
+(?<!a)b b not preceded by an a, won't match the b in cab but will match bed
+
+positive lookbehind
+(?<=a)b matches b only if preceded by an a, matches b in cab but not in bed
+no quantifiers or backreferences because the engine needs to know how many characters to lookbehind
+
+___
+
+## conditionals
+
+### if-then
+
+With a positive lookahead:
+(?(?=regex)then|else)
+
+Combine a lot of them:
+(?(?=condition)(then1|then2|then3)|(else1|else2|else3))
+
+---
+
+## Where to use
+
+grep -f, --file
+greo -v, --invert-match
+grep -vf filesmall filebig
+	has to hold small file in memory so use wisely
+grep -w, --word-regexp
+
+count things
+grep -c ">" counts lines
+grep -o "thing" | wc -l counts occurences
