@@ -1,0 +1,113 @@
+---
+title       : Regular expressions
+subtitle    :
+author      : Kathryn Iverson
+job         :
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      #
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : standalone # {standalone, draft, selfcontained}
+knit        : slidify::knit2slides
+---
+
+## Why regex
+
+* Find things
+* Clean up your data
+* Ubiquitous
+* Fast
+
+--- .class #id
+
+## You probably used it before
+
+* Grep
+	- g/re/p
+
+* Counting
+ 	- grep -c ">" myfile.fasta
+	- grep -o "geneID" mygenes.txt | wc - l
+* And more!
+	- grep -f, --file, pulls things to match from a file
+	- greo -v, --invert-match, match everything that's not this
+	- grep -vf smallfile bigfile > only_in_bigfile.txt
+		- has to hold small file in memory so use wisely
+	- grep -w, --word-regexp
+	- history | grep "command I forgot how to run"
+
+---
+
+## Searching basics
+
+* s/AUG.\*UAG/g
+* [A-Z], [a-z], [1-9], etc.
+* \d -- number
+* \s -- space
+* \b -- word boundary \bword\b
+* \w word characters
+* capital letters negate
+
+---
+
+## More special characters
+
+* ^ and $ are line boundaries
+* ^ negates when inside a range [^A-Z]
+* {n} match n times \d{3} -- 3 digit number
+* + matches one or more
+* ? matches 0 or more, optional
+
+Nov(ember)? matches Nov and November
+? is greedy, will match as much as possible
+	Nov 15(th)? will capture "Nov 15th" not "Nov 15"
+	add a second ? to make it lazy Nov 15(th)??
+		good for data clean-up
+
+() capture group add (:?) to make non-capturing
+
+---
+
+## backreference
+
+\1 is a backreference, matches the same thing as the first capture group
+	/(red|green|blue) x \1/ matches:
+		red x red, green x green or blue x blue but not blue x red
+	/(Sample_.\*) something \1 matches the sample name
+	find double words \b(\w+)\s+\1\b matches "the the" but not "the then" because of the trailing \b
+
+---
+
+## lookarounds
+don't actually match, just tell if a match is possible
+
+### lookahead
+q(?!u) q not followed by u
+q(?=u) q must be followed by a u
+the regex will only match the q in either case
+lookahead can use any regular expression and can use capture groups as normal
+
+---
+
+### lookbehind
+
+negative lookbehind
+(?<!a)b b not preceded by an a, won't match the b in cab but will match bed
+
+positive lookbehind
+(?<=a)b matches b only if preceded by an a, matches b in cab but not in bed
+no quantifiers or backreferences because the engine needs to know how many characters to lookbehind
+
+___
+
+## conditionals
+
+### if-then
+
+With a positive lookahead:
+(?(?=regex)then|else)
+
+Combine a lot of them:
+(?(?=condition)(then1|then2|then3)|(else1|else2|else3))
+
+---
