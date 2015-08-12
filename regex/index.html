@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Regular expressions</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Regular expressions">
+  <meta name="author" content="Kathryn Iverson">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/slides" 
+    src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Regular expressions</h1>
+    <h2>for irregular people</h2>
+    <p>Kathryn Iverson<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Why regex</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Find things</li>
+<li>Clean up your data</li>
+<li>Ubiquitous</li>
+<li>Fast</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>You probably used it before</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>Grep</p>
+
+<ul>
+<li>g/re/p</li>
+</ul></li>
+<li><p>Counting</p>
+
+<ul>
+<li>grep -c &quot;&gt;&quot; myfile.fasta</li>
+<li>grep -o &quot;geneID&quot; mygenes.txt | wc - l</li>
+</ul></li>
+<li><p>And more!</p>
+
+<ul>
+<li>grep -f, --file, pulls things to match from a file</li>
+<li>greo -v, --invert-match, match everything that&#39;s not this</li>
+<li>grep -vf smallfile bigfile &gt; only_in_bigfile.txt
+
+<ul>
+<li>has to hold small file in memory so use wisely</li>
+</ul></li>
+<li>grep -w, --word-regexp</li>
+<li>history | grep &quot;command I forgot how to run&quot;</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Searching basics</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>s/AUG.*UAG/g</li>
+<li>[A-Z], [a-z], [1-9], etc.</li>
+<li>\d -- number</li>
+<li>\s -- space</li>
+<li>\b -- word boundary \bword\b</li>
+<li>\w word characters</li>
+<li>capital letters negate</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>More special characters</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>^ and $ are line boundaries</li>
+<li>^ negates when inside a range [<sup>A-Z]</sup></li>
+<li>{n} match n times \d{3} -- 3 digit number</li>
+<li>+ matches one or more</li>
+<li>? matches 0 or more, optional</li>
+</ul>
+
+<p>Nov(ember)? matches Nov and November</p>
+
+<p>? is greedy, will match as much as possible</p>
+
+<ul>
+<li>Nov 15(th)? will capture &quot;Nov 15th&quot; not &quot;Nov 15&quot;</li>
+<li>add a second ? to make it lazy Nov 15(th)??</li>
+<li>good for data clean-up</li>
+</ul>
+
+<p>() capture group add (:?) to make non-capturing</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>backreference</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>\1 is a backreference, matches the same thing as the first capture group</li>
+</ul>
+
+<p>/(red|green|blue) x \1/ matches:</p>
+
+<ul>
+<li>red x red</li>
+<li>green x green</li>
+<li>blue x blue </li>
+</ul>
+
+<p>does not match:</p>
+
+<ul>
+<li><p>blue x red</p></li>
+<li><p>/(Sample_.*) something \1 matches the sample name</p></li>
+<li><p>find double words \b(\w+)\s+\1\b matches &quot;the the&quot; but not &quot;the then&quot; because of the trailing \b</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>lookarounds</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>don&#39;t actually match, just tell if a match is possible</p>
+
+<h3>lookahead</h3>
+
+<ul>
+<li>q(?!u) q not followed by u</li>
+<li>q(?=u) q must be followed by a u</li>
+<li>the regex will only match the q in either case</li>
+<li>lookahead can use any regular expression and can use capture groups as normal</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h3>lookbehind</h3>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>negative lookbehind</p></li>
+<li><p>(?&lt;!a)b b not preceded by an a, won&#39;t match the b in cab but will match bed</p></li>
+<li><p>positive lookbehind</p></li>
+<li><p>(?&lt;=a)b matches b only if preceded by an a, matches b in cab but not in bed</p></li>
+<li><p>no quantifiers or backreferences because the engine needs to know how many characters to lookbehind</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>conditionals</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>if-then</h3>
+
+<p>With a positive lookahead:</p>
+
+<p>(?(?=regex)then|else)</p>
+
+<p>Combine a lot of them:</p>
+
+<p>(?(?=condition)(then1|then2|then3)|(else1|else2|else3))</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Why regex'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='You probably used it before'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Searching basics'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='More special characters'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='backreference'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='lookarounds'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='lookbehind'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='conditionals'>
+         8
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
