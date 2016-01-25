@@ -7,11 +7,18 @@ framework   : io2012       # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      #
 widgets     : []            # {mathjax, quiz, bootstrap}
-mode        : selfcontained # {standalone, draft, selfcontained}
+mode        : standalone # {standalone, draft, selfcontained}
 knit        : slidify::knit2slides
 ---
 
-
+```
+## 
+## Attaching package: 'gplots'
+## 
+## The following object is masked from 'package:stats':
+## 
+##     lowess
+```
 
 ## What:
 
@@ -57,7 +64,7 @@ Databases are not great
 
 * Runs an iterative assembly by default, small k to large
 * Much faster than iterative velvet
-* Yes, I know I'm mixing numbers and bullets.
+* Yes, I know I'm mixing numbers and bullets. Deal with it.
 
 ---
 
@@ -75,7 +82,7 @@ Databases are not great
 
 ## Estimate gene counts
 
-Map reads with bowtie for short reads, bwa for long reads and normalize to gene length
+Map reads with bowtie (and normalize)
 
 ### Counts file
 
@@ -116,22 +123,10 @@ mgcluster(blast=allVall100.out, count=allgenes.preg.counts)
     - 18 metagenomes from lean and obese twin pairs and their mothers
     - From MG-RAST
 1. Pregnancy (Koren et al. 2012)
-    - 20 metagenomes from 10 mothers during the first and third trimester of pregnancy
+    - 20 metagenomes from mothers during the first and third trimester of pregnancy
     - From NCBI (MG-RAST data is messed up and being fixed with zero urgency)
 1. HMP data
     - 138 metagenomes
-    
-
-
----
-
-## HMP dataset
-
-Dataset was too large to cluster as a whole so OPFs were created within the KEGG category to which the genes were a best match
-
-1. BLAST genes against KEGG
-1. Group genes by their KEGG top hit
-1. Cluster seperatly within this group
 
 --- &twocol
 
@@ -139,13 +134,22 @@ Dataset was too large to cluster as a whole so OPFs were created within the KEGG
 
 *** =left
 
+
+```
+## Loading required package: plyr
+## 
+## Attaching package: 'plyr'
+## 
+## The following objects are masked from 'package:reshape':
+## 
+##     rename, round_any
+```
+
 ![plot of chunk unnamed-chunk-2](assets/fig/unnamed-chunk-2-1.png) 
 
 *** =right
 
-* Turnbaugh et al argue there is no taxanomic core but there may be a functional core
-* This seems to be true with the very coarse metric of KEGG functional categories
-* OPFs reflect the 16s (dis)similarity
+
 
 ---
 
@@ -161,19 +165,11 @@ ggplot(t.pcoa, aes(axis1, axis2, color=weight, shape=as.factor(group), group=as.
 
 -->
 
---- &twocol
+---
 
 ## Pregnancy data
 
-*** =left
-
 ![plot of chunk unnamed-chunk-3](assets/fig/unnamed-chunk-3-1.png) 
-
-*** =right
-
-* Distances are very small with the KEGG pcoa
-* Similar to the twin dataset, OPFs tend to follow OTUs
-* Functional core may be a reflection of database limitations 
 
 ---
 
@@ -193,10 +189,14 @@ From Slidify's authoring process, this slide was made:
 
 ## Annotation
 
-* BLAST genes to a database of your choice, KEGG for example, and annotate OPF by majority vote.
-* They're still only as good as your database though...
+BLAST genes to a database of your choice, KEGG for example, and annotate OPF by majority vote.
 
+---
 
+# HMP dataset
 
+Dataset was too large to cluster as a whole so OPFs were clustered within the KEGG category they 
+
+---
 
 
