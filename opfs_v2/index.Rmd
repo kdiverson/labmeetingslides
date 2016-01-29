@@ -1,5 +1,5 @@
 ---
-title: "opfs_v2"
+title: "opfs v2"
 author: "Kathryn Iverson"
 date: "January 25, 2016"
 output: ioslides_presentation
@@ -199,5 +199,41 @@ legend("bottomleft", c('OPF', 'OTU', 'KEGG'), pch=c(15, 16, 17),)
 
 ```
 
+## HMP Anterior nares
 
+```{r echo=FALSE}
+
+#plot
+par(mfrow=c(1,2))
+
+anterior_nares.ko.axes<-read.table("data/references/anterior_nares.ko.merge.thetayc.1.lt.nmds.axes")
+anterior_nares.opf.axes<-read.table("data/references/anterior_nares.opf.merge.thetayc.1.lt.nmds.axes")
+
+plot(anterior_nares.ko.axes, main="KO")
+plot(anterior_nares.opf.axes, main="OPFs")
+
+```
+
+## HMP Posterior fornix
+
+```{r echo=FALSE}
+par(mfrow=c(1,2))
+posterior_fornix.ko.axes<-read.table("data/references/posterior_fornix.ko.merge.thetayc.1.lt.nmds.axes")
+posterior_fornix.opf.axes<-read.table("data/references/posterior_fornix.opf.merge.thetayc.1.lt.nmds.axes")
+
+plot(posterior_fornix.ko.axes, main="KO")
+plot(posterior_fornix.opf.axes, main="OPFs")
+
+```
+
+## HMP Buccal mucosa
+
+```{r echo=FALSE}
+par(mfrow=c(1,2))
+buccal_mucosa.ko.axes<-read.table("data/references/buccal_mucosa.ko.merge.thetayc.1.lt.nmds.axes")
+buccal_mucosa.opf.axes<-read.table("data/references/buccal_mucosa.opf.merge.thetayc.1.lt.nmds.axes")
+
+plot(buccal_mucosa.ko.axes, main="KO")
+plot(buccal_mucosa.opf.axes, main="OPFs")
+```
 
