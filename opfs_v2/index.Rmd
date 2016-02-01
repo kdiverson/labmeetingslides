@@ -1,7 +1,7 @@
 ---
 title: "opfs v2"
 author: "Kathryn Iverson"
-date: "January 25, 2016"
+date: "February 3rd, 2016"
 output: ioslides_presentation
 ---
 ```{r echo=F, message=FALSE, warning=FALSE}
@@ -237,3 +237,9 @@ plot(buccal_mucosa.ko.axes, main="KO")
 plot(buccal_mucosa.opf.axes, main="OPFs")
 ```
 
+## Where do we go from here?
+
+- OPFs are a unit
+- As an OTU analog can do similar analysis
+- Repurpose diversity metrics
+- OPF prediction and feature selection
