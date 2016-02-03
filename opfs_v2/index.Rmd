@@ -1,5 +1,5 @@
 ---
-title: "opfs v2"
+title: "OPFs v2"
 author: "Kathryn Iverson"
 date: "February 3rd, 2016"
 output: ioslides_presentation
@@ -15,9 +15,9 @@ library(reshape)
 
 ### What:
 
-Operational protein families are clusters of similar proteins
-
-Creating OPFs is a database free method of grouping sequences analogous to OTUs
+- Operational protein families are clusters of similar proteins
+- Creating OPFs is a database free method of grouping sequences 
+- Analogous to OTUs
 
 ### Why:
 
@@ -79,18 +79,18 @@ mgcluster(blast=allVall100.out, count=allgenes.counts)
     - 20 metagenomes from mothers during the first and third trimester of pregnancy
     - From NCBI (MG-RAST data is messed up and being fixed with zero urgency)
 
-## Datasets {.smaller}
+## Datasets {.smaller} 
 
 HMP data
 
 - Anterior nares
-    - 87 metagtenomes
+    - 87 metagenomes
 - Buccal mucosa
-    - 107 metagtenomes
+    - 107 metagenomes
 - Posterior fornix
-    - 51 metagtenomes
+    - 51 metagenomes
 - Supragingival plaque
-    - 118 metagtenomes
+    - 118 metagenomes
 - Stool
     - 138 metagenomes
 - Tongue dorsum
@@ -149,14 +149,14 @@ ggplot(dfc, aes(x=method, y=dist_bars, group=type, fill=type)) +
 
 ## Pregnancy data
 
-KEGG masks vatiation, notice scale
+KEGG masks variation, notice scale
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 preg.pcoa <- read.csv(file='data/references/pregnancy_pcoa_vars.csv', sep=',', header=T)
 ggplot(preg.pcoa, aes(axis1, axis2, shape=trimester)) + geom_point(size=5) + theme_bw()  + facet_wrap(~method, ncol=1, scales='free')
 ```
 
-
+<!--
 ## Shared twin OPFs, OTUs and KEGG categories
 
 ```{r echo=FALSE}
@@ -198,6 +198,7 @@ points(twin.k.sums, pch=17, cex=4)
 legend("bottomleft", c('OPF', 'OTU', 'KEGG'), pch=c(15, 16, 17),)
 
 ```
+-->
 
 ## HMP Anterior nares
 
@@ -241,5 +242,5 @@ plot(buccal_mucosa.opf.axes, main="OPFs")
 
 - OPFs are a unit
 - As an OTU analog can do similar analysis
-- Repurpose diversity metrics
+- Re-purpose diversity metrics
 - OPF prediction and feature selection
